@@ -5,13 +5,15 @@
 		<script type="text/processing" data-processing-target="mycanvas">
 			Chicken chic = new Chicken(200,200,5);
 			Feathers test = new Feathers(100,100,0);
+			var score =0;
 			void setup()
 			{
 			  size(900,600);
 			  background(200);
 			  fill(200);
 			  PFont fontA = loadFont("courier");
-			  textFont(fontA, 14);  
+			  textFont(fontA, 14); 
+			  
 			}
 
 			void draw(){  
@@ -23,18 +25,28 @@
 					console.log(keyCode);
 				if (keyCode == 39){
 					chic.move("right");
+					checkPosition();
 				}
 				else if(keyCode == 37){
 					chic.move("left");
+					checkPosition();
 				}
 				else if(keyCode == 38){
 					chic.move("up");
+					checkPosition();
 				}
 				else if (keyCode == 40){
 					chic.move("down");
+					checkPosition();
 				}
-			  };
+			  }
 			}
+			
+			
+			
+			/*
+			//
+			*/
 			
 //TABATHA'S CHICKEN CODE STARTS HERE
 			class Chicken{
@@ -93,7 +105,7 @@
 						y++;
 					}
 				}		
-			};
+			}
 			function arrowPress(e){
 					console.log(e.keyCode);
 			}
@@ -130,13 +142,23 @@
 					fill(219, 211, 188);
 					rect(x+4,y+13,w+5,6);
 				}
-			};
+			}
 //END OF FEATHER CODE
 
-//
-			function updateScore(){
-			
+//CHECKING POS AND UPDATING SCORE FUNCTION
+			function checkPosition(){
+				if ((chic.x > test.x-20) && (chic.x < test.x+20) && (chic.y > test.y - 20) && (chic.y < test.y + 20)){
+					updateScore();
+				}
 			}
+			
+			function updateScore(){
+				score++;
+				document.getElementById("score").innerHTML = score;
+				console.log(score);
+			}
+			
+			
 		</script>
 	</head>
 	<body>
