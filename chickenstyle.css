@@ -1,0 +1,10 @@
+div{
+	text-align:center;
+	font-size:30px;
+	background:#FF99FF;
+	margin:10px 600px;
+	border-radius:25px;
+}
+#score{
+	margin:10px 700px;
+}
