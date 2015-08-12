@@ -154,7 +154,7 @@
 				//constructor )we don't really need anything in the parameters yet
 				Maze(){
 				//add the feathers here
-				feathers.push(new Feathers(100,100,0));
+				feathers.push(new Feathers(100,100,0), new Feathers(250,250,0), new Feathers(300,300,0), new Feathers(400,400,0));
 				}
 				
 				//methods
@@ -175,7 +175,7 @@
 			function checkPosition(feathers){
 				for (var i=0;i<feathers.length;i++){
 					//Basically if the chicken touches the feather
-					if ((chic.x > feathers[i].x-16) && (chic.x < feathers[i].x+9 + feathers[i].w) && (chic.y > feathers[i].y - 27) && (chic.y < feathers[i].y + 19)){
+					if ((chic.x > feathers[i].x-37) && (chic.x < feathers[i].x+9 + feathers[i].w) && (chic.y > feathers[i].y - 47) && (chic.y < feathers[i].y + 19)){
 						updateScore();
 						//move feather off of the screen
 						feathers[i].x=-500;
