@@ -3,7 +3,7 @@
 		<link rel="stylesheet" type="css" href="chickenstyle.css">
 		<script src="processing-1.4.1.js"></script>
 		<script type="text/processing" data-processing-target="mycanvas">
-			Chicken chic = new Chicken(200,200,5);
+			Chicken chic = new  Chicken(200,200,5);
 			Feathers test = new Feathers(100,100,0);
 			var score =0;
 			void setup()
@@ -38,15 +38,12 @@
 				else if (keyCode == 40){
 					chic.move("down");
 					checkPosition();
+					
+				
 				}
 			  }
 			}
 			
-			
-			
-			/*
-			//
-			*/
 			
 //TABATHA'S CHICKEN CODE STARTS HERE
 			class Chicken{
@@ -106,9 +103,7 @@
 					}
 				}		
 			}
-			function arrowPress(e){
-					console.log(e.keyCode);
-			}
+			
 //END OF TABATHA'S CHICKEN CODE
 
 //START OF FEATHERS CODE
@@ -147,7 +142,8 @@
 
 //CHECKING POS AND UPDATING SCORE FUNCTION
 			function checkPosition(){
-				if ((chic.x > test.x-20) && (chic.x < test.x+20) && (chic.y > test.y - 20) && (chic.y < test.y + 20)){
+				//if ((chic.x >= test.x-15) && (chic.x <= test.x+20) && (chic.y >= test.y - 30) && (chic.y <= test.y + 20)){
+				if((test.x-16 < chic.x) && (chic.x < test.x + 4 + 5 + test.w) && (test.y - 27 < chic.y) && (chic.y < test.y + 13 + 6)){ 	
 					updateScore();
 				}
 			}
