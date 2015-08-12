@@ -1,0 +1,201 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="css" href="chickenstyle.css">
+		<script src="processing-1.4.1.js"></script>
+		<script type="text/processing" data-processing-target="mycanvas">
+			//this makes our chicken
+			Chicken chic = new Chicken(200,200,5);
+			//this makes the first level of the maze
+			Maze first = new Maze();
+			
+			var score =0;
+			
+			void setup()
+			{
+			  size(900,600);
+			  background(200);
+			  fill(200);
+			  PFont fontA = loadFont("courier");
+			  textFont(fontA, 14);
+			}
+
+			void draw(){  
+				background(200,255,255);
+				chic.draw();
+				//See line 167 first. Once we return the list, we have to save it in a variable, and that variable will be the parameters in the checkPosition functions
+				var f=first.getFeathers();
+				//inside the drawMaze function is the drawFeathers function
+				first.drawMaze();
+				if(keyPressed == true){
+					console.log(keyCode);
+				if (keyCode == 39){
+					chic.move("right");
+					checkPosition(f);
+				}
+				else if(keyCode == 37){
+					chic.move("left");
+					checkPosition(f);
+				}
+				else if(keyCode == 38){
+					chic.move("up");
+					checkPosition(f);
+				}
+				else if (keyCode == 40){
+					chic.move("down");
+					checkPosition(f);
+				}
+			  }
+			  
+			}
+			
+//TABATHA'S CHICKEN CODE STARTS HERE
+			class Chicken{
+				//attributes
+				var x;
+				var y;
+				var w;
+				//constructor
+				Chicken(xVal,yVal,width){
+					x=xVal;
+					y=yVal;
+					w=width;
+				}
+				//methods
+				void draw(){
+					noStroke();
+					fill(100,100,100); //center
+					rect(x,y,w,w);
+					fill(178, 136, 93);//white
+					rect(x+5,y,w,w);
+					rect(x-5,y,w,w);
+					rect(x,y-5,w,w);
+					rect(x,y+5,w,w);
+					rect(x+5,y+5,w,w);
+					rect(x-5,y+5,w,w);
+					rect(x+5,y-5,w,w);
+					rect(x-5,y-5,w,w);
+					fill(230,138,0);//orange
+					rect(x+5,y+10,w,w);	//feet					
+					rect(x-5,y+10,w,w);//feet
+					fill(178, 136, 93);//white
+					rect(x-10,y,w,w);
+					rect(x+10,y-5,w,w);				
+					rect(x+10,y,w,w);
+					rect(x+10,y-10,w,w);
+					fill(230,138,0);
+					rect(x+15,y-10,w,w);
+					fill(178, 136, 93);//white
+					rect(x+10,y-15,w,w);
+					rect(x+5,y-10,w,w);
+					rect(x+5,y-15,w,w);
+					fill(0,0,0);
+					rect(x+9.5,y-10,2.5,2.5);	
+				}
+				void move(dir){
+					if (dir == "right"){
+						x++;
+					}
+					else if(dir == "left"){
+						x--;
+					}
+					else if(dir == "up"){
+						y--;
+					}
+					else if(dir == "down"){
+						y++;
+					}
+				}		
+			}
+			function arrowPress(e){
+					console.log(e.keyCode);
+			}
+//END OF TABATHA'S CHICKEN CODE
+
+//START OF FEATHERS CODE
+			class Feathers{
+				//attributes
+				var x;
+				var y;
+				var w;
+				
+				//constructor
+				Feathers(xPos,yPos, width){
+					x=xPos;
+					y=yPos;
+					w=width;
+				}
+				
+				//methods
+				void drawFeathers(){
+					fill(242, 233, 233);
+					rect(x+4,y,w-13,13);
+					fill(242, 233, 233);
+					rect(x+1,y-8,w-18,17);
+					fill(242, 233, 233);
+					rect(x-4,y-13,w-17,17);
+					fill(235, 221, 221);
+					rect(x-8,y-18,w-17,16);
+					fill(230, 211, 202);
+					rect(x-12,y-23,w-17,15);
+					fill(214, 197, 145);
+					rect(x-16,y-27,w-17,14);
+					fill(219, 211, 188);
+					rect(x+4,y+13,w+5,6);
+				}
+			}
+//END OF FEATHER CODE
+
+//START OF MAZE CODE
+			class Maze{
+				//attributes
+				//list of feathers
+				var feathers=[];
+				
+				//constructor )we don't really need anything in the parameters yet
+				Maze(){
+				//add the feathers here
+				feathers.push(new Feathers(100,100,0));
+				}
+				
+				//methods
+				//draw the maze with feathers
+				void drawMaze(){
+					for(var i=0; i<feathers.length();i++){
+						feathers[i].drawFeathers();
+					}
+				}
+				//If we don't use this function, we wouldn't be able to use the "feathers" list outside of the Maze class. This allows us to return the list feathers. See line 25.
+				Array getFeathers(){
+					return feathers;
+				}
+			}
+//END OF MAZE CODE
+
+//CHECKING POS AND UPDATING SCORE FUNCTION
+			function checkPosition(feathers){
+				for (var i=0;i<feathers.length;i++){
+					//Basically if the chicken touches the feather
+					if ((chic.x > feathers[i].x-16) && (chic.x < feathers[i].x+9 + feathers[i].w) && (chic.y > feathers[i].y - 27) && (chic.y < feathers[i].y + 19)){
+						updateScore();
+						//move feather off of the screen
+						feathers[i].x=-500;
+						feathers[i].y=-500;
+					}
+				}
+			}
+			
+			function updateScore(){
+				score++;
+				document.getElementById("score").innerHTML = score;
+				console.log(score);
+			}
+//END OF UPDATING SCORE FUNCTION
+		
+		</script>
+	</head>
+	<body>
+		<div>Feather Count</div>
+		<div id="score">0</div>
+		<canvas id="mycanvas"></canvas>
+	</body>
+</html>

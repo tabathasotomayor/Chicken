@@ -5,12 +5,9 @@
 	</head>
 	
 	<script type="text/processing" data-processing-target="mycanvas">
-			//the making of the new layers of the buildings
-			//Layer carol = new Layer(400,100,1,390, 122,55,139,20);
-			//Layer kate = new Layer (400,5, 2.5,250,209,95,238,30);
-			//Layer jay = new Layer (400,10,5,80, 153,50,204,50);
-			//Snow frosty = new Snow ();
+			
 			Chicken chic = new Chicken(200,200,5);
+			Block bob = new Block(200,200,40,80);
 			
 			
 			
@@ -24,23 +21,18 @@
 			  textFont(fontA, 14);  
 			  
 			}
+			
 			//set up of the background
 			void draw(){  
 			  text("Hello Web!",20,20);
 			  background(200,255,255);
 			  println("Hello ErrorLog!");
-			  //carol.make();
-			  //kate.make();
-			  //kate.moveL();
-			  //carol.moveL();
-			  //jay.make();
-			  //jay.moveL();
-			  //frosty.draw();
+			  bob.drawB();
 			  chic.draw();
 			  //chic.move();
 			  if(keyPressed == true){
 				console.log(keyCode);
-				if (keyCode == 39){
+				if (keyCode == 39 ){ //make the can move shit ""&& chic.canMove() == true""
 					chic.move("right");
 				}
 				else if(keyCode == 37){
@@ -61,8 +53,7 @@
 			class Chicken{
 				//attributes
 				var x;
-				var y;
-				
+				var y;				
 				var w;
 					//constructor
 					Chicken( xVal, yVal,width)
@@ -133,100 +124,34 @@
 				function arrowPress(e){
 					console.log(e.keyCode);
 				}
-			//the layer class
-			class Layer
-			{
-				//attributes
-				var tW;
-				var list;
-				var yY;
-				var hH;
-				var low;
-				var high;
-				var r;
-				var g;
-				var b;
-				var s;
-				var w;
-				//constructor		
-				 Layer(yPos,lowL,speed,highH, red, green,blue,width)
-				 {
-					yY= yPos;					
-					list=[];
-					low=lowL;
-					high=highH;
-					r=red;
-					g=green;
-					b= blue;
-					s = speed;
-					w = width;
-					
-					
-					
-					
-					tW = 0;
-					while (tW<=400){
-						var bW= random(5,20);
-						var hH = random(low,high);
-						list.push(new Building( tW,yY,s,bW,hH));
-						tW=tW+ bW;
-					
-					}
-					
-				}
-					//methods		
-					void make()
-					{
-						
-							for(var i =0; i< list.length; i++)
-							{
-								
-								fill(r,g,b);
-								list[i].drawBuilding();
-								
-								
-							}
-							
-					
-					}
-					void moveL()
-					{
-						
-							for(var i =0; i< list.length; i++)
-							{								
-								list[i].moveBuilding();
-							}
-							tW = tW-s;
-							if(tW<400){
-								var bW= random(w-10,w);
-								var hH = random(low,high);
-								list.push(new Building( tW,yY,s,bW,hH));
-								tW=tW+ bW;
-
-							
-							}
-					}			
-			}
-			// this is the snow class		
-			class Snow{
-				//attributes
+			
+			
+			class Block{
+			//attributes
+				var R;
+				var T;
+				var B;
+				var L;
+				var h;
+				var w; 
 				var x;
 				var y;
-				//constructor
-				Snow(xPos,yPos){
-					x = xPos;
-					y=yPos;
-				}
-				//methods
-				void draw(){
-					for (c=0;c<50;c++){
-					fill(255,255,255);
-					ellipse(random(0,400),random(0,400),5,5);
+					//constructor
+					Block(xVal, yVal, height, width){
+						x=xVal;
+						y=yVal;
+						h = height;
+						w = width;
+						T = y;
+						B = y+ h;
+						L = x;
+						R = x+w;
 					}
-				}
+					void drawB(){											
+						fill(0,0,0);
+						rect(x,y,h,w);
+					}
 			}
-			
-			
 					
 		</script>
 		
