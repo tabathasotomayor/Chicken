@@ -25,29 +25,131 @@
 				//See line 167 first. Once we return the list, we have to save it in a variable, and that variable will be the parameters in the checkPosition functions
 				var f=first.getFeathers();
 				var g=first.getGuards();
+				var b=first.getBoxes();
 				//inside the drawMaze function is the drawFeathers function and drawGuards function
 				first.drawMaze();
 				checkGuards(g);
+				arrow(keyPressed, keyCode);
+				
+			}
+			function arrow(keyPressed, keyCode){
 				if(keyPressed == true){
 					console.log(keyCode);
-				if (keyCode == 39){
+					if (keyCode == 39 && chic.canMove() == true){
 					chic.move("right");
 					checkPosition(f);
-				}
-				else if(keyCode == 37){
+					}
+				else if (keyCode == 39 && chic.canMove() == false){
+					chic.move("left");
+					chic.move("left");
 					chic.move("left");
 					checkPosition(f);
+				} 
+				else if(keyCode == 37 && chic.canMove() == true){
+					chic.move("left");
 				}
-				else if(keyCode == 38){
+				else if(keyCode ==37 && chic.canMove()== false){
+					chic.move("right");
+					chic.move("right");
+					chic.move("right");
+				}
+				else if(keyCode == 38 && chic.canMove() == true){
 					chic.move("up");
-					checkPosition(f);
 				}
-				else if (keyCode == 40){
+				else if (keyCode ==38 && chic.canMove() ==false){
 					chic.move("down");
-					checkPosition(f);
+					chic.move("down");
+					chic.move("down");	
+				}
+				else if (keyCode == 40 && chic.canMove() == true){
+					chic.move("down");
+				}
+				else if (keyCode == 40 && chic.canMove() == false){
+					chic.move("up");
+					chic.move("up");
+					chic.move("up");
 				}
 			  }
+				}
+				
+	//START OF BLOCK CODE
+			class Block{
+				//attributes
+				var r;
+				var t;
+				var b;
+				var l;
+				var h;
+				var w; 
+				var x;
+				var y;
+				//constructor
+				Block(xVal, yVal, height, width){
+					x=xVal;
+					y=yVal;
+					h = height;
+					w = width;
+				}
+				//methods
+				void drawB(){
+					t = y;
+					b = y+ h;
+					l = x;
+					r = x+w;					
+					fill(0,0,0);
+					rect(x,y,w,h);
+				}
 			}
+			
+//START OF MAZE CODE
+			class Maze{
+				//attributes
+				//list of feathers
+				var feathers=[];
+				var guards=[];
+				var boxes=[];
+				
+				//constructor, we don't really need anything in the parameters yet
+				Maze(){
+				//add the feathers here
+				feathers.push(new Feathers(100,100,0), new Feathers(250,250,0), new Feathers(300,300,0), new Feathers(400,400,0));
+				//add guards here
+				guards.push(new Guards(300,500), new Guards(400,900));
+				//add boxes here
+				boxes.push(new Block(250,250,40,40), new Block(400,400,50,80), new Block(300, 500, 60,20));
+				}
+				
+				//methods
+				//draw the maze with feathers and guards and boxes
+				void drawMaze(){
+					for(var i=0; i<feathers.length();i++){
+						feathers[i].drawFeathers();
+					}
+					for(var j=0; j<guards.length();j++){
+						guards[j].drawGuardsUp();
+						guards[j].moveGuards();
+					}
+					for(var a=0;a<boxes.length;a++){
+						console.log("hi");
+						boxes[a].drawB();
+					}
+				}
+				
+				//If we don't use this function, we wouldn't be able to use the "feathers" list outside of the Maze class. This allows us to return the list feathers. See line 25.
+				Array getFeathers(){
+					return feathers;
+				}
+				
+				Array getGuards(){
+					return guards;
+				}
+				
+				Array getBoxes(){
+					return boxes;
+				}
+			}
+//END OF MAZE CODE
+
 			
 //TABATHA'S CHICKEN CODE STARTS HERE
 			class Chicken{
@@ -105,8 +207,23 @@
 					else if(dir == "down"){
 						y++;
 					}
-				}		
+				}
+				void canMove(){
+					var move = true;	
+					for (var i=0; i < boxes.length; i++){
+						if (chic.x <boxes[i].R +10&&
+							chic.x>boxes[i].L - 10&&
+							chic.y >boxes[i].T -10 &&
+							chic.y <boxes[i].B +10 ){
+								console.log("move is false");
+								move = false;
+							}
+					}
+					console.log("something returned");
+					return move;
+				}
 			}
+			
 			function arrowPress(e){
 					console.log(e.keyCode);
 			}
@@ -146,45 +263,6 @@
 			}
 //END OF FEATHER CODE
 
-//START OF MAZE CODE
-			class Maze{
-				//attributes
-				//list of feathers
-				var feathers=[];
-				var guards=[];
-				
-				//constructor )we don't really need anything in the parameters yet
-				Maze(){
-				//add the feathers here
-				feathers.push(new Feathers(100,100,0), new Feathers(250,250,0), new Feathers(300,300,0), new Feathers(400,400,0));
-				
-				//add guards here
-				guards.push(new Guards(300,500), new Guards(400,900));
-				}
-				
-				//methods
-				//draw the maze with feathers
-				void drawMaze(){
-					for(var i=0; i<feathers.length();i++){
-						feathers[i].drawFeathers();
-					}
-					for(var j=0; j<guards.length();j++){
-						guards[j].drawGuardsUp();
-						guards[j].moveGuards();
-					}
-				}
-				//If we don't use this function, we wouldn't be able to use the "feathers" list outside of the Maze class. This allows us to return the list feathers. See line 25.
-				Array getFeathers(){
-					return feathers;
-				}
-				
-				Array getGuards(){
-					return guards;
-				}
-				
-				
-			}
-//END OF MAZE CODE
 
 //CHECKING POS AND UPDATING SCORE FUNCTION
 			function checkPosition(feathers){
@@ -215,7 +293,6 @@
 						chic.x=200;
 						chic.y=200;
 					}
-					
 				}
 			}
 //END OF GUARD CHICKEN INTERACTION
@@ -268,7 +345,7 @@
 					//END OF PERSON
 				}
 				
-				void drawGuardsDown{
+				void drawGuardsDown(){
 					//LIGHT
 					fill(255, 243, 13);
 					rect(a,b,5,5);
@@ -358,14 +435,14 @@
 					rect(e+25,f-6,4,14);
 				}
 				
-				
 				void moveGuards(){
 					//move up
 					h=h-1;
 				}
 			}
 //END OF GUARD CODE
-		
+
+
 		</script>
 	</head>
 	<body>
