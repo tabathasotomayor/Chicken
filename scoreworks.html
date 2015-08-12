@@ -169,7 +169,7 @@
 						feathers[i].drawFeathers();
 					}
 					for(var j=0; j<guards.length();j++){
-						guards[j].drawGuards();
+						guards[j].drawGuardsUp();
 						guards[j].moveGuards();
 					}
 				}
@@ -215,6 +215,7 @@
 						chic.x=200;
 						chic.y=200;
 					}
+					
 				}
 			}
 //END OF GUARD CHICKEN INTERACTION
@@ -232,7 +233,7 @@
 				}
 				
 				//methods
-				void drawGuards(){
+				void drawGuardsUp(){
 					//START OF LIGHT
 					fill(255, 243, 13);
 					rect(g,h,5,5);
@@ -266,6 +267,97 @@
 					rect(g-5,h+25,14,3);
 					//END OF PERSON
 				}
+				
+				void drawGuardsDown{
+					//LIGHT
+					fill(255, 243, 13);
+					rect(a,b,5,5);
+					fill(255, 243, 13);
+					rect(a-5,b+5,15,5);
+					fill(255, 243, 13);
+					rect(a-10,b+10,25,7);
+					fill(255, 243, 13);
+					rect(a-15,b+17,35,7);
+					fill(255, 243, 13);
+					rect(a-20,b+24,45,7);
+					fill(255, 243, 13);
+					rect(a-25,b+31,55,7);
+					fill(255, 243, 13);
+					rect(a-30,b+38,65,7);
+					fill(255, 243, 13);
+					rect(a-35,b+45,75,7);
+					//FLASHLIGHT BODY
+					fill(0, 0, 0);
+					rect(a-5,b-20,17,20);
+					//PERSON
+					fill(133, 97, 34);
+					rect(a-15,b-49,40,19);
+					fill(133, 97, 34);
+					rect(a-10,b-52,30,29);
+					fill(214, 172, 98);
+					rect(a-5,b-23,14,3);
+				}
+				
+				void drawGuardsRight(){
+					//LIGHT
+					fill(255, 243, 13);
+					rect(c,d,5,5);
+					fill(255, 243, 13);
+					rect(c+5,d-5,5,15);
+					fill(255, 243, 13);
+					rect(c+10,d-10,7,25);
+					fill(255, 243, 13);
+					rect(c+17,d-15,7,35);
+					fill(255, 243, 13);
+					rect(c+24,d-20,7,45);
+					fill(255, 243, 13);
+					rect(c+29,d-25,7,55);
+					fill(255, 243, 13);
+					rect(c+36,d-30,7,65);
+					fill(255, 243, 13);
+					rect(c+43,d-35,7,75);
+					//FLASHLIGHT BODY
+					fill(0, 0, 0);
+					rect(c-20,d-6,20,17);
+					//PERSON
+					fill(133, 97, 34);
+					rect(c-49,d-20,19,40);
+					fill(133, 97, 34);
+					rect(c-53,d-15,29,30);
+					fill(214, 172, 98);
+					rect(c-24,d-6,4,14);
+				}
+				
+				void drawGuardsLeft(){
+					//LIGHTS
+					fill(255, 243, 13);
+					rect(e,f,5,5);
+					fill(255, 243, 13);
+					rect(e-5,f-5,5,15);
+					fill(255, 243, 13);
+					rect(e-12,f-10,7,25);
+					fill(255, 243, 13);
+					rect(e-19,f-15,7,35);
+					fill(255, 243, 13);
+					rect(e-26,f-20,7,45);
+					fill(255, 243, 13);
+					rect(e-33,f-25,7,55);
+					fill(255, 243, 13);
+					rect(e-40,f-30,7,65);
+					fill(255, 243, 13);
+					rect(e-47,f-35,7,75);
+					//FLASHLIGHT BODY
+					fill(0, 0, 0);
+					rect(e+5,f-6,20,17);
+					//PERSON
+					fill(133, 97, 34);
+					rect(e+35,f-16,19,40);
+					fill(133, 97, 34);
+					rect(e+29,f-11,29,30);
+					fill(214, 172, 98);
+					rect(e+25,f-6,4,14);
+				}
+				
 				
 				void moveGuards(){
 					//move up
