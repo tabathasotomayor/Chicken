@@ -7,9 +7,19 @@
 	<script type="text/processing" data-processing-target="mycanvas">
 			
 			Chicken chic = new Chicken(200,200,5);
-			Block bob = new Block(200,200,40,80);
 			
+			var boxes =[];
 			
+			Block test = new Block(250,250,40,40);
+			Block test2 = new Block(400,400,50,80);
+			Block yo = new Block ( 300, 500, 60,20);
+			boxes.push(test);
+			boxes.push(test2);
+			boxes. push (yo);
+			//boxes.push(new Block(400,400,50,80));
+			//Block bob = new Block(250,250,40,40);
+			
+			test.drawB();
 			
 			void setup()
 			{
@@ -18,35 +28,66 @@
 			  background(200);
 			  fill(200);
 			  PFont fontA = loadFont("courier");
-			  textFont(fontA, 14);  
+			  textFont(fontA, 14);
+			  
 			  
 			}
+			 
 			
 			//set up of the background
 			void draw(){  
 			  text("Hello Web!",20,20);
 			  background(200,255,255);
+			  //test.drawB();
 			  println("Hello ErrorLog!");
-			  bob.drawB();
+			  //bob.drawB();
 			  chic.draw();
 			  //chic.move();
 			  if(keyPressed == true){
 				console.log(keyCode);
-				if (keyCode == 39 ){ //make the can move shit ""&& chic.canMove() == true""
+				if (keyCode == 39 && chic.canMove() == true){ //make the can move shit ""&& chic.canMove() == true""
 					chic.move("right");
 				}
-				else if(keyCode == 37){
+				else if (keyCode == 39 && chic.canMove() == false){
+					chic.move("left");
+					chic.move("left");
+					chic.move("left");
+					
+				} 
+				else if(keyCode == 37 && chic.canMove() == true){
 					chic.move("left");
 				}
-				else if(keyCode == 38){
+				else if(keyCode ==37 && chic.canMove()== false){
+					chic.move("right");
+					chic.move("right");
+					chic.move("right");
+					
+				
+				}
+				else if(keyCode == 38 && chic.canMove() == true){
 					chic.move("up");
 				}
-				else if (keyCode == 40){
+				else if (keyCode ==38 && chic.canMove() ==false){
 					chic.move("down");
+					chic.move("down");
+					chic.move("down");
+					
+				}
+				else if (keyCode == 40 && chic.canMove() == true){
+					chic.move("down");
+				}
+				else if (keyCode == 40 && chic.canMove() == false){
+					chic.move("up");
+					chic.move("up");
+					chic.move("up");
+				
 				}
 			  };
 			  
-			  
+			 for (var i=0; i < boxes.length; i++){
+				boxes[i].drawB();
+				//console.log("block here");
+			}
 			}
 			
 			//this is the building class
@@ -101,6 +142,7 @@
 					void move(dir){
 					if (dir == "right"){
 						x++;
+						//console.log("x is" +x);
 					}
 					else if(dir == "left") {
 							x--;
@@ -114,7 +156,34 @@
 						else if(dir == "down") {
 								y++;
 						}
-				};
+				}
+					void canMove(){
+					var move = true;
+									
+					
+					for (var i=0; i < boxes.length; i++){
+						if (chic.x <boxes[i].R +10&&
+							chic.x>boxes[i].L - 10&&
+							chic.y >boxes[i].T -10 &&
+							chic.y <boxes[i].B +10 ){
+							
+							console.log("move is false");
+							move = false;
+							//return move;
+							}
+						/*else{
+							console.log("move is true");
+							move = true;
+							return move;
+							}*/
+						//return move;
+					
+					}
+					
+					return move;
+					//console.log("something returned");
+					
+					}
 					
 			}
 			/*
@@ -142,16 +211,18 @@
 						y=yVal;
 						h = height;
 						w = width;
+						
+					}
+					void drawB(){
 						T = y;
 						B = y+ h;
 						L = x;
-						R = x+w;
-					}
-					void drawB(){											
+						R = x+w;					
 						fill(0,0,0);
-						rect(x,y,h,w);
+						rect(x,y,w,h);
 					}
 			}
+			
 					
 		</script>
 		
