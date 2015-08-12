@@ -6,21 +6,34 @@
 	
 	<script type="text/processing" data-processing-target="mycanvas">
 			
-			Chicken chic = new Chicken(200,200,5);
+			Chicken chic = new Chicken(60,500,5);
 			
 			var boxes =[];
+			//walls
+			Block wall = new Block(0,0,600,40);
+			Block wall2 = new Block(0,0,40,900);
+			Block wall3 = new Block ( 860, 0, 600,40);
+			Block wall4 = new Block (0,560,40,900);
+			//obstacles 
+			Block yo = new Block ( 60,150,55,46);
+			Block hah = new Block ( 120,140,20,20);
+			Block ba = new Block ( 130,50,20,30);
+							
+			boxes.push(wall);
+			boxes.push(wall2);
+			boxes. push (wall3);
+			boxes.push (wall4);
+			boxes.push (yo);
+			boxes.push (hah);
+			boxes.push (ba);
 			
-			Block test = new Block(250,250,40,40);
-			Block test2 = new Block(400,400,50,80);
-			Block yo = new Block ( 300, 500, 60,20);
-			boxes.push(test);
-			boxes.push(test2);
-			boxes. push (yo);
-			//boxes.push(new Block(400,400,50,80));
-			//Block bob = new Block(250,250,40,40);
+			//PAIN
+			var pain=[];
+			//things
+			Block pe = new Block( 200,200,30,30);
+			pain.push(pe);
 			
-			test.drawB();
-			
+						
 			void setup()
 			{
 			  
@@ -45,38 +58,42 @@
 			  //chic.move();
 			  if(keyPressed == true){
 				console.log(keyCode);
-				if (keyCode == 39 && chic.canMove() == true){ //make the can move shit ""&& chic.canMove() == true""
+				if (keyCode == 39 && chic.canMove() == true){ //it can move right
 					chic.move("right");
 				}
-				else if (keyCode == 39 && chic.canMove() == false){
+				else if (keyCode == 39 && chic.canMove() == false){//it cant move right
 					chic.move("left");
 					chic.move("left");
 					chic.move("left");
 					
 				} 
-				else if(keyCode == 37 && chic.canMove() == true){
+				else if (keyCode == 39 && chic.hurtMove() == false){//it hits the pain to the right
+					chic.move("die");
+					console.log("heyyy")
+					
+				} 
+				else if(keyCode == 37 && chic.canMove() == true){// it can move left
 					chic.move("left");
 				}
-				else if(keyCode ==37 && chic.canMove()== false){
+				else if(keyCode ==37 && chic.canMove()== false){// it cant move left
 					chic.move("right");
 					chic.move("right");
-					chic.move("right");
-					
+					chic.move("right");				
 				
 				}
-				else if(keyCode == 38 && chic.canMove() == true){
+				else if(keyCode == 38 && chic.canMove() == true){ //it can move up
 					chic.move("up");
 				}
-				else if (keyCode ==38 && chic.canMove() ==false){
+				else if (keyCode ==38 && chic.canMove() ==false){ // it cant move up
 					chic.move("down");
 					chic.move("down");
 					chic.move("down");
 					
 				}
-				else if (keyCode == 40 && chic.canMove() == true){
+				else if (keyCode == 40 && chic.canMove() == true){ // it can move down
 					chic.move("down");
 				}
-				else if (keyCode == 40 && chic.canMove() == false){
+				else if (keyCode == 40 && chic.canMove() == false){ // it cant move down
 					chic.move("up");
 					chic.move("up");
 					chic.move("up");
@@ -86,6 +103,10 @@
 			  
 			 for (var i=0; i < boxes.length; i++){
 				boxes[i].drawB();
+				//console.log("block here");
+			}
+			for (var i=0; i < pain.length; i++){
+				pain[i].drawB();
 				//console.log("block here");
 			}
 			}
@@ -156,6 +177,9 @@
 						else if(dir == "down") {
 								y++;
 						}
+						else if( dir == "die"){
+						       console.log("here");
+						}
 				}
 					void canMove(){
 					var move = true;
@@ -185,10 +209,25 @@
 					
 					}
 					
+					void hurtMove(){
+					var hurt = true;
+					
+					for (var i = 0; i< pain.length; i++){
+						if (chic.x<pain[i].R +10 &&
+							chic.x>pain[i].L -10&&
+							chic.y>pain[i].T -10&&
+							chic.y<pain[i].B +10){
+							
+							console.log("move is false pt two");
+							hurt = false;
+							}
+						
+					}
+					return hurt;
+					}
+					
 			}
-			/*
 			
-				*/
 				
 				function arrowPress(e){
 					console.log(e.keyCode);
