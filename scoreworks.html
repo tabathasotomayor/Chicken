@@ -3,25 +3,28 @@
 		<link rel="stylesheet" type="css" href="chickenstyle.css">
 		<script src="processing-1.4.1.js"></script>
 		<script type="text/processing" data-processing-target="mycanvas">
+			//this makes our chicken
 			Chicken chic = new Chicken(200,200,5);
+			//this makes the first level of the maze
 			Maze first = new Maze();
 			
 			var score =0;
+			
 			void setup()
 			{
 			  size(900,600);
 			  background(200);
 			  fill(200);
 			  PFont fontA = loadFont("courier");
-			  textFont(fontA, 14); 
-			  
+			  textFont(fontA, 14);
 			}
 
 			void draw(){  
-				text("Hello Web!",20,20);
 				background(200,255,255);
 				chic.draw();
+				//See line 167 first. Once we return the list, we have to save it in a variable, and that variable will be the parameters in the checkPosition functions
 				var f=first.getFeathers();
+				//inside the drawMaze function is the drawFeathers function
 				first.drawMaze();
 				if(keyPressed == true){
 					console.log(keyCode);
@@ -142,39 +145,39 @@
 			}
 //END OF FEATHER CODE
 
+//START OF MAZE CODE
 			class Maze{
-			//attributes
+				//attributes
 				//list of feathers
 				var feathers=[];
 				
-			//constructor
+				//constructor )we don't really need anything in the parameters yet
 				Maze(){
 				//add the feathers here
 				feathers.push(new Feathers(100,100,0));
 				}
 				
-			//methods
+				//methods
 				//draw the maze with feathers
 				void drawMaze(){
 					for(var i=0; i<feathers.length();i++){
 						feathers[i].drawFeathers();
 					}
 				}
-				
+				//If we don't use this function, we wouldn't be able to use the "feathers" list outside of the Maze class. This allows us to return the list feathers. See line 25.
 				Array getFeathers(){
 					return feathers;
 				}
 			}
+//END OF MAZE CODE
 
 //CHECKING POS AND UPDATING SCORE FUNCTION
 			function checkPosition(feathers){
-			console.log("hello");
 				for (var i=0;i<feathers.length;i++){
-				console.log("Hey");
+					//Basically if the chicken touches the feather
 					if ((chic.x > feathers[i].x-16) && (chic.x < feathers[i].x+9 + feathers[i].w) && (chic.y > feathers[i].y - 27) && (chic.y < feathers[i].y + 19)){
 						updateScore();
-						console.log("HELLO");
-						//move feather
+						//move feather off of the screen
 						feathers[i].x=-500;
 						feathers[i].y=-500;
 					}
@@ -186,9 +189,8 @@
 				document.getElementById("score").innerHTML = score;
 				console.log(score);
 			}
-			
+//END OF UPDATING SCORE FUNCTION
 		
-			
 		</script>
 	</head>
 	<body>
