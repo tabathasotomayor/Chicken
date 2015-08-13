@@ -7,6 +7,14 @@
 			Chicken chic = new Chicken(200,200,5);
 			//this makes the first level of the maze
 			Maze first = new Maze();
+			//THESE HAVE TO BE GLOBAL VARIABLES
+			var boxes=[];
+			//add boxes here
+			boxes.push(new Block(250,250,40,40), new Block(400,400,50,80), new Block(300, 500, 60,20));
+			var f=first.getFeathers();
+			
+				
+			
 			
 			var score =0;
 			
@@ -23,7 +31,6 @@
 				background(200,255,255);
 				chic.draw();
 				//See line 167 first. Once we return the list, we have to save it in a variable, and that variable will be the parameters in the checkPosition functions
-				var f=first.getFeathers();
 				var g=first.getGuards();
 				var b=first.getBoxes();
 				//inside the drawMaze function is the drawFeathers function and drawGuards function
@@ -39,38 +46,44 @@
 					chic.move("right");
 					checkPosition(f);
 					}
-				else if (keyCode == 39 && chic.canMove() == false){
-					chic.move("left");
-					chic.move("left");
-					chic.move("left");
-					checkPosition(f);
-				} 
-				else if(keyCode == 37 && chic.canMove() == true){
-					chic.move("left");
+					else if (keyCode == 39 && chic.canMove() == false){
+						chic.move("left");
+						chic.move("left");
+						chic.move("left");
+						checkPosition(f);
+					} 
+					else if(keyCode == 37 && chic.canMove() == true){
+						chic.move("left");
+						checkPosition(f);
+					}
+					else if(keyCode ==37 && chic.canMove()== false){
+						chic.move("right");
+						chic.move("right");
+						chic.move("right");
+						checkPosition(f);
+					}
+					else if(keyCode == 38 && chic.canMove() == true){
+						chic.move("up");
+						checkPosition(f);
+					}
+					else if (keyCode ==38 && chic.canMove() ==false){
+						chic.move("down");
+						chic.move("down");
+						chic.move("down");
+						checkPosition(f);					
+					}
+					else if (keyCode == 40 && chic.canMove() == true){
+						chic.move("down");
+						checkPosition(f);
+					}
+					else if (keyCode == 40 && chic.canMove() == false){
+						chic.move("up");
+						chic.move("up");
+						chic.move("up");
+						checkPosition(f);
+					}
 				}
-				else if(keyCode ==37 && chic.canMove()== false){
-					chic.move("right");
-					chic.move("right");
-					chic.move("right");
-				}
-				else if(keyCode == 38 && chic.canMove() == true){
-					chic.move("up");
-				}
-				else if (keyCode ==38 && chic.canMove() ==false){
-					chic.move("down");
-					chic.move("down");
-					chic.move("down");	
-				}
-				else if (keyCode == 40 && chic.canMove() == true){
-					chic.move("down");
-				}
-				else if (keyCode == 40 && chic.canMove() == false){
-					chic.move("up");
-					chic.move("up");
-					chic.move("up");
-				}
-			  }
-				}
+			}
 				
 	//START OF BLOCK CODE
 			class Block{
@@ -107,7 +120,6 @@
 				//list of feathers
 				var feathers=[];
 				var guards=[];
-				var boxes=[];
 				
 				//constructor, we don't really need anything in the parameters yet
 				Maze(){
@@ -115,8 +127,6 @@
 				feathers.push(new Feathers(100,100,0), new Feathers(250,250,0), new Feathers(300,300,0), new Feathers(400,400,0));
 				//add guards here
 				guards.push(new Guards(300,500), new Guards(400,900));
-				//add boxes here
-				boxes.push(new Block(250,250,40,40), new Block(400,400,50,80), new Block(300, 500, 60,20));
 				}
 				
 				//methods
@@ -209,12 +219,13 @@
 					}
 				}
 				void canMove(){
-					var move = true;	
+					var move = true;
+					console.log("YOOOOOO");
 					for (var i=0; i < boxes.length; i++){
-						if (chic.x <boxes[i].R +10&&
-							chic.x>boxes[i].L - 10&&
-							chic.y >boxes[i].T -10 &&
-							chic.y <boxes[i].B +10 ){
+						if (chic.x <boxes[i].r +10&&
+							chic.x>boxes[i].l - 10&&
+							chic.y >boxes[i].t -10 &&
+							chic.y <boxes[i].b +10 ){
 								console.log("move is false");
 								move = false;
 							}
@@ -302,6 +313,12 @@
 				//attributes
 				var g;
 				var h;
+				var a;
+				var b;
+				var c;
+				var d;
+				var e;
+				var f;
 				
 				//constructor
 				Guards(posx,posy){
