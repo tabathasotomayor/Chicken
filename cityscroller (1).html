@@ -10,30 +10,83 @@
 			
 			var boxes =[];
 			//walls
-			Block wall = new Block(0,0,600,40);
-			Block wall2 = new Block(0,0,40,900);
-			Block wall3 = new Block ( 860, 0, 600,40);
-			Block wall4 = new Block (0,560,40,900);
+			Block wall = new Block(0,0,600,40,0);
+			Block wall2 = new Block(0,0,40,900,0);
+			Block wall3 = new Block ( 860, 0, 600,40,0);
+			Block wall4 = new Block (0,560,40,900,0);
 			//obstacles 
-			Block yo = new Block ( 60,150,55,46);
-			Block hah = new Block ( 120,140,20,20);
-			Block ba = new Block ( 130,50,20,30);
+			Block yo = new Block ( 60,150,55,46,0);
+			Block ba = new Block ( 130,50,20,30,0);
+			Block four = new Block(350,260,130,170,0);
+			Block six = new Block( 470,380, 80,90,0);
+			Block nine = new Block (650,60,80,90,0);
+			Block ten = new Block (700,160, 30,90,0);
+			Block one = new Block (60,290,60,180,0);
+			Block h = new Block ( 80,360,40,80,0);
+			Block k = new Block (380,30,80,130,0);
+			Block l = new Block (410,100,30,80,0);
+			Block m = new Block (350,60,30,20,0);
+			Blocl n = new Block (520,50,20,30,0);
+			
+			
+			
+			var die = false;
 							
 			boxes.push(wall);
 			boxes.push(wall2);
 			boxes. push (wall3);
 			boxes.push (wall4);
 			boxes.push (yo);
-			boxes.push (hah);
 			boxes.push (ba);
+			boxes.push(four);
+			boxes.push(six);
+			boxes.push(nine);
+			boxes.push(ten);
+			boxes.push(one);
+			boxes.push(h);
+			boxes.push(k);
+			boxes.push(l);
+			boxes.push(n);
+			boxes.push(m);
 			
-			//PAIN
-			var pain=[];
 			//things
-			Block pe = new Block( 200,200,30,30);
-			pain.push(pe);
+			Block pe = new Block( 500,470,70,30,1);
+			Block two = new Block( 140,75,35,40,1);
+			Block hah = new Block ( 120,140,20,20,1);
+			Block five = new Block (400,520,40,30,1);
+			Block c = new Block ( 330,415,30,40,1);
+			Block b = new Block (300,460,30,20,1);
+			Block a = new Block (360,500,25,40,1);
+			Block d = new Block (800,140,30,20,1);
+			Block g = new Block ( 820,85,20,30,1);
+			Block j = new Block (160,460,20,30,1);	
+			Block le = new Block (400,200,20,30,1);
+			Block p = new Block ( 490,160,20,30,1);
+			Block he = new Block ( 530,215,30,20,1);
+			Block ha = new Block (200,530,8,8,1);
+			Block ka = new Block (250,500,8,8,1);
+			Block fa = new Block (230,200,8,8,1);
+			Block ba = new Block (250,150,8,8,1);
 			
-						
+			
+			boxes.push(pe);
+			boxes.push(two);
+			boxes.push (hah);
+			boxes.push (five);
+			boxes.push(c);
+			boxes.push(b);
+			boxes.push(a);
+			boxes.push(d);
+			boxes.push(g);
+			boxes.push(j);
+			boxes.push(p);
+			boxes.push(le);
+			boxes.push(he);
+			boxes.push(ha);
+			boxes.push(ka);
+			boxes.push(fa);
+			boxes.push(ba);
+								
 			void setup()
 			{
 			  
@@ -50,7 +103,7 @@
 			//set up of the background
 			void draw(){  
 			  text("Hello Web!",20,20);
-			  background(200,255,255);
+			  background(62,87,40);
 			  //test.drawB();
 			  println("Hello ErrorLog!");
 			  //bob.drawB();
@@ -61,19 +114,29 @@
 				if (keyCode == 39 && chic.canMove() == true){ //it can move right
 					chic.move("right");
 				}
+				else if(keyCode == 39 && chic.canMove() == false && die == true){
+					chic.move("die");
+					die = false;
+				
+				}
 				else if (keyCode == 39 && chic.canMove() == false){//it cant move right
 					chic.move("left");
 					chic.move("left");
 					chic.move("left");
 					
-				} 
+				} /*
 				else if (keyCode == 39 && chic.hurtMove() == false){//it hits the pain to the right
 					chic.move("die");
 					console.log("heyyy")
 					
-				} 
+				} */
 				else if(keyCode == 37 && chic.canMove() == true){// it can move left
 					chic.move("left");
+				}
+				else if(keyCode == 37 && chic.canMove() == false && die == true){
+					chic.move("die");
+					die = false;
+				
 				}
 				else if(keyCode ==37 && chic.canMove()== false){// it cant move left
 					chic.move("right");
@@ -84,6 +147,11 @@
 				else if(keyCode == 38 && chic.canMove() == true){ //it can move up
 					chic.move("up");
 				}
+				else if(keyCode == 38 && chic.canMove() == false && die == true){
+					chic.move("die");
+					die = false;
+				
+				}
 				else if (keyCode ==38 && chic.canMove() ==false){ // it cant move up
 					chic.move("down");
 					chic.move("down");
@@ -92,6 +160,11 @@
 				}
 				else if (keyCode == 40 && chic.canMove() == true){ // it can move down
 					chic.move("down");
+				}
+				else if(keyCode == 40 && chic.canMove() == false && die == true){
+					chic.move("die");
+					die = false;
+				
 				}
 				else if (keyCode == 40 && chic.canMove() == false){ // it cant move down
 					chic.move("up");
@@ -104,11 +177,11 @@
 			 for (var i=0; i < boxes.length; i++){
 				boxes[i].drawB();
 				//console.log("block here");
-			}
+			}/*
 			for (var i=0; i < pain.length; i++){
 				pain[i].drawB();
 				//console.log("block here");
-			}
+			}*/
 			}
 			
 			//this is the building class
@@ -179,6 +252,8 @@
 						}
 						else if( dir == "die"){
 						       console.log("here");
+							   x=100;
+							   y=500;
 						}
 				}
 					void canMove(){
@@ -194,6 +269,9 @@
 							console.log("move is false");
 							move = false;
 							//return move;
+							if(boxes[i].isPain()){
+								die = true;
+							}
 							}
 						/*else{
 							console.log("move is true");
@@ -208,7 +286,7 @@
 					//console.log("something returned");
 					
 					}
-					
+					/*
 					void hurtMove(){
 					var hurt = true;
 					
@@ -224,7 +302,7 @@
 						
 					}
 					return hurt;
-					}
+					}*/
 					
 			}
 			
@@ -244,12 +322,14 @@
 				var w; 
 				var x;
 				var y;
+				var p;
 					//constructor
-					Block(xVal, yVal, height, width){
+					Block(xVal, yVal, height, width, pain){
 						x=xVal;
 						y=yVal;
 						h = height;
 						w = width;
+						p=pain;
 						
 					}
 					void drawB(){
@@ -259,6 +339,13 @@
 						R = x+w;					
 						fill(0,0,0);
 						rect(x,y,w,h);
+					}
+					boolean isPain(){
+						if (p==0){
+							return false;
+						}else{
+							return true;
+						}
 					}
 			}
 			
