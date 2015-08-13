@@ -12,8 +12,8 @@
 			//add boxes here
 			boxes.push(new Block(250,250,40,40), new Block(400,400,50,80), new Block(300, 500, 60,20));
 			var f=first.getFeathers();
-			
-				
+			Guards bob=new Guards(400,200);
+			var dir;
 			
 			
 			var score =0;
@@ -125,8 +125,6 @@
 				Maze(){
 				//add the feathers here
 				feathers.push(new Feathers(100,100,0), new Feathers(250,250,0), new Feathers(300,300,0), new Feathers(400,400,0));
-				//add guards here
-				guards.push(new Guards(300,500), new Guards(400,900));
 				}
 				
 				//methods
@@ -135,23 +133,19 @@
 					for(var i=0; i<feathers.length();i++){
 						feathers[i].drawFeathers();
 					}
-					for(var j=0; j<guards.length();j++){
-						guards[j].drawGuardsUp();
-						guards[j].moveGuards();
-					}
+				
 					for(var a=0;a<boxes.length;a++){
 						console.log("hi");
 						boxes[a].drawB();
 					}
+					
+					bob.moveGuards();
+					
 				}
 				
 				//If we don't use this function, we wouldn't be able to use the "feathers" list outside of the Maze class. This allows us to return the list feathers. See line 25.
 				Array getFeathers(){
 					return feathers;
-				}
-				
-				Array getGuards(){
-					return guards;
 				}
 				
 				Array getBoxes(){
@@ -297,13 +291,10 @@
 
 //HITTING THE GUARD AND RESTARTING POSITION
 			function checkGuards(guards){
-				for (var j=0;j<guards.length;j++){
-					//Basically if the chicken touches the guards
-					if((chic.x>guards[j].g-35) && (chic.x<guards[j].g+40) && (chic.y>guards[j].h-47) && (chic.y<guards[j].h+5)){
-						//move chicken back to original starting position
-						chic.x=200;
-						chic.y=200;
-					}
+				if((chic.x>bob.g-35) && (chic.x<bob.g+40) && (chic.y>bob.h-47) && (chic.y<bob.h+5)){
+					//move chicken back to original starting position
+					chic.x=200;	
+					chic.y=200;					
 				}
 			}
 //END OF GUARD CHICKEN INTERACTION
@@ -313,12 +304,6 @@
 				//attributes
 				var g;
 				var h;
-				var a;
-				var b;
-				var c;
-				var d;
-				var e;
-				var f;
 				
 				//constructor
 				Guards(posx,posy){
@@ -328,128 +313,140 @@
 				
 				//methods
 				void drawGuardsUp(){
-					//START OF LIGHT
-					fill(255, 243, 13);
-					rect(g,h,5,5);
-					fill(255, 243, 13);
-					rect(g-5,h-5,15,5);
-					fill(255, 243, 13);
-					rect(g-10,h-12,25,7);
-					fill(255, 243, 13);
-					rect(g-15,h-19,35,7);
-					fill(255, 243, 13);
-					rect(g-20,h-26,45,7);
-					fill(255, 243, 13);
-					rect(g-25,h-33,55,7);
-					fill(255, 243, 13);
-					rect(g-30,h-40,65,7);
-					fill(255, 243, 13);
-					rect(g-35,h-47,75,7);
-					//END OF LIGHT
+					dir=1;
+					if(dir==1){
+						//START OF LIGHT
+						fill(255, 243, 13);
+						rect(g,h,5,5);
+						fill(255, 243, 13);
+						rect(g-5,h-5,15,5);
+						fill(255, 243, 13);
+						rect(g-10,h-12,25,7);
+						fill(255, 243, 13);
+						rect(g-15,h-19,35,7);
+						fill(255, 243, 13);
+						rect(g-20,h-26,45,7);
+						fill(255, 243, 13);
+						rect(g-25,h-33,55,7);
+						fill(255, 243, 13);
+						rect(g-30,h-40,65,7);
+						fill(255, 243, 13);
+						rect(g-35,h-47,75,7);
+						//END OF LIGHT
 
-					//START OF BODY
-					fill(0, 0, 0);
-					rect(g-5,h+5,17,20);
-					//END OF BODY
+						//START OF BODY
+						fill(0, 0, 0);
+						rect(g-5,h+5,17,20);
+						//END OF BODY
 
-					//START OF PERSON
-					fill(133, 97, 34);
-					rect(g-15,h+35,40,19);
-					fill(133, 97, 34);
-					rect(g-10,h+28,30,29);
-					fill(214, 172, 98);
-					rect(g-5,h+25,14,3);
-					//END OF PERSON
+						//START OF PERSON
+						fill(133, 97, 34);
+						rect(g-15,h+35,40,19);
+						fill(133, 97, 34);
+						rect(g-10,h+28,30,29);
+						fill(214, 172, 98);
+						rect(g-5,h+25,14,3);
+						//END OF PERSON
+					}
 				}
 				
 				void drawGuardsDown(){
-					//LIGHT
-					fill(255, 243, 13);
-					rect(a,b,5,5);
-					fill(255, 243, 13);
-					rect(a-5,b+5,15,5);
-					fill(255, 243, 13);
-					rect(a-10,b+10,25,7);
-					fill(255, 243, 13);
-					rect(a-15,b+17,35,7);
-					fill(255, 243, 13);
-					rect(a-20,b+24,45,7);
-					fill(255, 243, 13);
-					rect(a-25,b+31,55,7);
-					fill(255, 243, 13);
-					rect(a-30,b+38,65,7);
-					fill(255, 243, 13);
-					rect(a-35,b+45,75,7);
-					//FLASHLIGHT BODY
-					fill(0, 0, 0);
-					rect(a-5,b-20,17,20);
-					//PERSON
-					fill(133, 97, 34);
-					rect(a-15,b-49,40,19);
-					fill(133, 97, 34);
-					rect(a-10,b-52,30,29);
-					fill(214, 172, 98);
-					rect(a-5,b-23,14,3);
+					dir=2;
+					if(dir==2){
+						//LIGHT
+						fill(255, 243, 13);
+						rect(g,h,5,5);
+						fill(255, 243, 13);
+						rect(g-5,h+5,15,5);
+						fill(255, 243, 13);
+						rect(g-10,h+10,25,7);
+						fill(255, 243, 13);
+						rect(g-15,h+17,35,7);
+						fill(255, 243, 13);
+						rect(g-20,h+24,45,7);
+						fill(255, 243, 13);
+						rect(g-25,h+31,55,7);
+						fill(255, 243, 13);
+						rect(g-30,h+38,65,7);
+						fill(255, 243, 13);
+						rect(g-35,h+45,75,7);
+						//FLASHLIGHT BODY
+						fill(0, 0, 0);
+						rect(g-5,h-20,17,20);
+						//PERSON
+						fill(133, 97, 34);
+						rect(g-15,h-49,40,19);
+						fill(133, 97, 34);
+						rect(g-10,h-52,30,29);
+						fill(214, 172, 98);
+						rect(g-5,h-23,14,3);
+					}
 				}
 				
 				void drawGuardsRight(){
-					//LIGHT
-					fill(255, 243, 13);
-					rect(c,d,5,5);
-					fill(255, 243, 13);
-					rect(c+5,d-5,5,15);
-					fill(255, 243, 13);
-					rect(c+10,d-10,7,25);
-					fill(255, 243, 13);
-					rect(c+17,d-15,7,35);
-					fill(255, 243, 13);
-					rect(c+24,d-20,7,45);
-					fill(255, 243, 13);
-					rect(c+29,d-25,7,55);
-					fill(255, 243, 13);
-					rect(c+36,d-30,7,65);
-					fill(255, 243, 13);
-					rect(c+43,d-35,7,75);
-					//FLASHLIGHT BODY
-					fill(0, 0, 0);
-					rect(c-20,d-6,20,17);
-					//PERSON
-					fill(133, 97, 34);
-					rect(c-49,d-20,19,40);
-					fill(133, 97, 34);
-					rect(c-53,d-15,29,30);
-					fill(214, 172, 98);
-					rect(c-24,d-6,4,14);
+					dir=3;
+					if(dir==3){
+						//LIGHT
+						fill(255, 243, 13);
+						rect(g,h,5,5);
+						fill(255, 243, 13);
+						rect(g+5,h-5,5,15);
+						fill(255, 243, 13);
+						rect(g+10,h-10,7,25);
+						fill(255, 243, 13);
+						rect(g+17,h-15,7,35);
+						fill(255, 243, 13);
+						rect(g+24,h-20,7,45);
+						fill(255, 243, 13);
+						rect(g+29,h-25,7,55);
+						fill(255, 243, 13);
+						rect(g+36,h-30,7,65);
+						fill(255, 243, 13);
+						rect(g+43,h-35,7,75);
+						//FLASHLIGHT BODY
+						fill(0, 0, 0);
+						rect(g-20,h-6,20,17);
+						//PERSON
+						fill(133, 97, 34);
+						rect(g-49,h-20,19,40);
+						fill(133, 97, 34);
+						rect(g-53,h-15,29,30);
+						fill(214, 172, 98);
+						rect(g-24,h-6,4,14);
+					}
 				}
 				
 				void drawGuardsLeft(){
-					//LIGHTS
-					fill(255, 243, 13);
-					rect(e,f,5,5);
-					fill(255, 243, 13);
-					rect(e-5,f-5,5,15);
-					fill(255, 243, 13);
-					rect(e-12,f-10,7,25);
-					fill(255, 243, 13);
-					rect(e-19,f-15,7,35);
-					fill(255, 243, 13);
-					rect(e-26,f-20,7,45);
-					fill(255, 243, 13);
-					rect(e-33,f-25,7,55);
-					fill(255, 243, 13);
-					rect(e-40,f-30,7,65);
-					fill(255, 243, 13);
-					rect(e-47,f-35,7,75);
-					//FLASHLIGHT BODY
-					fill(0, 0, 0);
-					rect(e+5,f-6,20,17);
-					//PERSON
-					fill(133, 97, 34);
-					rect(e+35,f-16,19,40);
-					fill(133, 97, 34);
-					rect(e+29,f-11,29,30);
-					fill(214, 172, 98);
-					rect(e+25,f-6,4,14);
+					dir=4;
+					if(dir==4){
+						//LIGHTS
+						fill(255, 243, 13);
+						rect(g,h,5,5);
+						fill(255, 243, 13);
+						rect(g-5,h-5,5,15);
+						fill(255, 243, 13);
+						rect(g-12,h-10,7,25);
+						fill(255, 243, 13);
+						rect(g-19,h-15,7,35);
+						fill(255, 243, 13);
+						rect(g-26,h-20,7,45);
+						fill(255, 243, 13);
+						rect(g-33,h-25,7,55);
+						fill(255, 243, 13);
+						rect(g-40,h-30,7,65);
+						fill(255, 243, 13);
+						rect(g-47,h-35,7,75);
+						//FLASHLIGHT BODY
+						fill(0, 0, 0);
+						rect(g+5,h-6,20,17);
+						//PERSON
+						fill(133, 97, 34);
+						rect(g+35,h-16,19,40);
+						fill(133, 97, 34);
+						rect(g+29,h-11,29,30);
+						fill(214, 172, 98);
+						rect(g+25,h-6,4,14);
+					}
 				}
 				
 				void moveGuards(){
