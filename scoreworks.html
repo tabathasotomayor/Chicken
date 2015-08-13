@@ -10,10 +10,10 @@
 			//THESE HAVE TO BE GLOBAL VARIABLES
 			var boxes=[];
 			//add boxes here
-			boxes.push(new Block(250,250,40,40), new Block(400,400,50,80), new Block(300, 500, 60,20));
+			boxes.push(new Block(250,250,40,40), new Block(400,400,50,80), new Block(400, 100, 60,20));
 			var f=first.getFeathers();
 			Guards bob=new Guards(400,200);
-			var dir;
+			var dir= null;
 			var moveThem;
 			
 			var score =0;
@@ -29,13 +29,14 @@
 			void draw(){  
 				background(200,255,255);
 				chic.draw();
-				//See line 167 first. Once we return the list, we have to save it in a variable, and that variable will be the parameters in the checkPosition functions
-				var b=first.getBoxes();
-				//inside the drawMaze function is the drawFeathers function and drawGuards function
+					//See line 167 first. Once we return the list, we have to save it in a variable, and that variable will be the parameters in the checkPosition functions
+					//var b=first.getBoxes();
+					//inside the drawMaze function is the drawFeathers function and drawGuards function
 				first.drawMaze();
 				console.log("FSFAF");
 				checkGuards();
 				arrow(keyPressed, keyCode);
+				
 				
 			}
 			function arrow(keyPressed, keyCode){
@@ -122,8 +123,8 @@
 				
 				//constructor, we don't really need anything in the parameters yet
 				Maze(){
-				//add the feathers here
-				feathers.push(new Feathers(100,100,0), new Feathers(250,250,0), new Feathers(300,300,0), new Feathers(400,400,0));
+					//add the feathers here
+					feathers.push(new Feathers(100,100,0), new Feathers(250,250,0), new Feathers(300,300,0), new Feathers(400,400,0));
 				}
 				
 				//methods
@@ -134,11 +135,11 @@
 					}
 				
 					for(var a=0;a<boxes.length;a++){
-						console.log("hi");
+						//console.log("hi");
 						boxes[a].drawB();
 					}
 					
-					bob.drawGuardsDown();
+					//bob.drawGuardsDown();
 					bob.moveGuards();					
 				}
 				
@@ -463,15 +464,17 @@
 				void moveGuards(){
 					canMoveGuards();
 					console.log("HERE");
-					if ((dir == 1) && (moveThem == true)){
+					if ((dir == 1) && (moveThem == true)){ //if facing up and can move 
 						h=h-1;
+						drawGuardsUp();
 					}
-					else if ((dir == 1) && (moveThem == false)){
+					else if ((dir == 1) && (moveThem == false)){ 
 						h=h+30;
 						drawGuardsDown();
 					} 
 					else if((dir == 2) && (moveThem == true)){
 						h=h+1;
+						drawGuardsDown();
 					}
 					else if((dir == 2) && (moveThem == false)){
 						h=h-30;
@@ -479,6 +482,7 @@
 					}
 					else if((dir == 3) && (moveThem == true)){
 						g=g+1;
+						drawGuardsRight();
 					}
 					else if((dir == 3) && (moveThem == false)){
 						g=g-30;
@@ -486,10 +490,15 @@
 					}
 					else if((dir == 4) && (moveThem == true)){
 						g=g-1;
+						drawGuardsLeft();
 					}
 					else if((dir == 4) && (moveThem == false)){
 						g=g+30;
 						drawGuardsRight();
+					}
+					else if(dir==null){
+						drawGuardsDown();
+						console.log("NULLLL");
 					}
 				}
 			}
