@@ -14,12 +14,11 @@
 			var f=first.getFeathers();
 			Guards bob=new Guards(400,200);
 			var dir;
-			
+			var moveThem;
 			
 			var score =0;
 			
-			void setup()
-			{
+			void setup(){
 			  size(900,600);
 			  background(200);
 			  fill(200);
@@ -31,11 +30,11 @@
 				background(200,255,255);
 				chic.draw();
 				//See line 167 first. Once we return the list, we have to save it in a variable, and that variable will be the parameters in the checkPosition functions
-				var g=first.getGuards();
 				var b=first.getBoxes();
 				//inside the drawMaze function is the drawFeathers function and drawGuards function
 				first.drawMaze();
-				checkGuards(g);
+				console.log("FSFAF");
+				checkGuards();
 				arrow(keyPressed, keyCode);
 				
 			}
@@ -139,8 +138,8 @@
 						boxes[a].drawB();
 					}
 					
-					bob.moveGuards();
-					
+					bob.drawGuardsDown();
+					bob.moveGuards();					
 				}
 				
 				//If we don't use this function, we wouldn't be able to use the "feathers" list outside of the Maze class. This allows us to return the list feathers. See line 25.
@@ -214,17 +213,14 @@
 				}
 				void canMove(){
 					var move = true;
-					console.log("YOOOOOO");
 					for (var i=0; i < boxes.length; i++){
 						if (chic.x <boxes[i].r +10&&
 							chic.x>boxes[i].l - 10&&
 							chic.y >boxes[i].t -10 &&
 							chic.y <boxes[i].b +10 ){
-								console.log("move is false");
 								move = false;
 							}
 					}
-					console.log("something returned");
 					return move;
 				}
 			}
@@ -290,9 +286,10 @@
 //END OF UPDATING SCORE FUNCTION
 
 //HITTING THE GUARD AND RESTARTING POSITION
-			function checkGuards(guards){
+			function checkGuards(){
 				if((chic.x>bob.g-35) && (chic.x<bob.g+40) && (chic.y>bob.h-47) && (chic.y<bob.h+5)){
 					//move chicken back to original starting position
+					console.log("WORK");
 					chic.x=200;	
 					chic.y=200;					
 				}
@@ -449,32 +446,48 @@
 					}
 				}
 				
+				void canMoveGuards(){
+					moveThem = true;
+					for (var i=0; i < boxes.length; i++){
+						if (bob.g <boxes[i].r +10&&
+							bob.g>boxes[i].l - 10&&
+							bob.h >boxes[i].t -10 &&
+							bob.h <boxes[i].b +10 ){
+								console.log("move is false");
+								moveThem = false;
+						}
+					}
+					return moveThem;
+				}
+				
 				void moveGuards(){
-					if ((dir == 1) && (chic.canMove() == true)){
+					canMoveGuards();
+					console.log("HERE");
+					if ((dir == 1) && (moveThem == true)){
 						h=h-1;
 					}
-					else if ((dir == 1) && (chic.canMove() == false)){
+					else if ((dir == 1) && (moveThem == false)){
 						h=h+30;
 						drawGuardsDown();
 					} 
-					else if((dir == 2) && (chic.canMove() == true)){
+					else if((dir == 2) && (moveThem == true)){
 						h=h+1;
 					}
-					else if((dir == 2) && (chic.canMove() == false)){
+					else if((dir == 2) && (moveThem == false)){
 						h=h-30;
 						drawGuardsUp();
 					}
-					else if((dir == 3) && (chic.canMove() == true)){
+					else if((dir == 3) && (moveThem == true)){
 						g=g+1;
 					}
-					else if((dir == 3) && (chic.canMove() == false)){
+					else if((dir == 3) && (moveThem == false)){
 						g=g-30;
 						drawGuardsLeft();					
 					}
-					else if((dir == 4) && (chic.canMove() == true)){
+					else if((dir == 4) && (moveThem == true)){
 						g=g-1;
 					}
-					else if((dir == 4) && (chic.canMove() == false)){
+					else if((dir == 4) && (moveThem == false)){
 						g=g+30;
 						drawGuardsRight();
 					}
