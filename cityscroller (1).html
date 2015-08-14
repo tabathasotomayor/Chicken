@@ -1,358 +1,552 @@
 <html>
 	<head>
 		<script src="processing-1.4.1.js"></script>
-	
+		<link rel="stylesheet" type="css" href="chickenstyle.css">
 	</head>
 	
 	<script type="text/processing" data-processing-target="mycanvas">
-			
+				//THIS MAKES OUR CHICKEN
 			Chicken chic = new Chicken(60,500,5);
-			
+				//THIS MAKES FIRST LEVEL OF MAZE
+			Maze first = new Maze();
+				//GLOBAL VARIABLES
 			var boxes =[];
-			//walls
-			Block wall = new Block(0,0,600,40,0);
-			Block wall2 = new Block(0,0,40,900,0);
-			Block wall3 = new Block ( 860, 0, 600,40,0);
-			Block wall4 = new Block (0,560,40,900,0);
-			//obstacles 
-			Block yo = new Block ( 60,150,55,46,0);
-			Block ba = new Block ( 130,50,20,30,0);
-			Block four = new Block(350,260,130,170,0);
-			Block six = new Block( 470,380, 80,90,0);
-			Block nine = new Block (650,60,80,90,0);
-			Block ten = new Block (700,160, 30,90,0);
-			Block one = new Block (60,290,60,180,0);
-			Block h = new Block ( 80,360,40,80,0);
-			Block k = new Block (380,30,80,130,0);
-			Block l = new Block (410,100,30,80,0);
-			Block m = new Block (350,60,30,20,0);
-			Blocl n = new Block (520,50,20,30,0);
-			
+				//WALLS
+			boxes.push(new Block(0,0,600,40,0),new Block(0,0,40,900,0),new Block ( 860, 0, 600,40,0),new Block (0,560,40,900,0))
+				//DEATH WALLS
+			boxes.push(new Block(60,150,55,46,0),new Block(130,50,20,30,0),new Block(350,260,130,170,0),new Block(470,380, 80,90,0),new Block(650,60,80,90,0),new Block(700,160, 30,90,0),new Block(60,290,60,180,0),new Block(80,360,40,80,0),new Block(380,30,80,130,0),new Block(410,100,30,80,0),new Block(350,60,30,20,0),new Block(520,50,20,30,0));
+				//THINGS?
+			boxes.push(new Block(500,470,70,30,1),new Block(140,75,35,40,1),new Block(120,140,20,20,1),new Block(400,520,40,30,1),new Block(330,415,30,40,1),new Block(300,460,30,20,1),new Block(360,500,25,40,1),new Block(800,140,30,20,1),new Block(820,85,20,30,1),new Block(160,460,20,30,1),new Block(400,200,20,30,1),new Block(490,160,20,30,1),new Block(530,215,30,20,1),new Block(200,530,8,8,1),new Block(250,500,8,8,1),new Block(230,200,8,8,1),new Block(250,150,8,8,1));
+				//FEATHERS GLOBAL VARIABLE
+			var f=first.getFeathers();
+				//THIS MAKES THE GUARD
+			Guards bob=new Guards(400,200);
+			var dir= null;
+			var moveThem;
+				//SCORE GLOBAL VARIABLE
+			var score =0;
 			
 			
 			var die = false;
-							
-			boxes.push(wall);
-			boxes.push(wall2);
-			boxes. push (wall3);
-			boxes.push (wall4);
-			boxes.push (yo);
-			boxes.push (ba);
-			boxes.push(four);
-			boxes.push(six);
-			boxes.push(nine);
-			boxes.push(ten);
-			boxes.push(one);
-			boxes.push(h);
-			boxes.push(k);
-			boxes.push(l);
-			boxes.push(n);
-			boxes.push(m);
-			
-			//things
-			Block pe = new Block( 500,470,70,30,1);
-			Block two = new Block( 140,75,35,40,1);
-			Block hah = new Block ( 120,140,20,20,1);
-			Block five = new Block (400,520,40,30,1);
-			Block c = new Block ( 330,415,30,40,1);
-			Block b = new Block (300,460,30,20,1);
-			Block a = new Block (360,500,25,40,1);
-			Block d = new Block (800,140,30,20,1);
-			Block g = new Block ( 820,85,20,30,1);
-			Block j = new Block (160,460,20,30,1);	
-			Block le = new Block (400,200,20,30,1);
-			Block p = new Block ( 490,160,20,30,1);
-			Block he = new Block ( 530,215,30,20,1);
-			Block ha = new Block (200,530,8,8,1);
-			Block ka = new Block (250,500,8,8,1);
-			Block fa = new Block (230,200,8,8,1);
-			Block ba = new Block (250,150,8,8,1);
-			
-			
-			boxes.push(pe);
-			boxes.push(two);
-			boxes.push (hah);
-			boxes.push (five);
-			boxes.push(c);
-			boxes.push(b);
-			boxes.push(a);
-			boxes.push(d);
-			boxes.push(g);
-			boxes.push(j);
-			boxes.push(p);
-			boxes.push(le);
-			boxes.push(he);
-			boxes.push(ha);
-			boxes.push(ka);
-			boxes.push(fa);
-			boxes.push(ba);
-								
-			void setup()
-			{
-			  
+			void setup(){
 			  size(900,600);
 			  background(200);
 			  fill(200);
 			  PFont fontA = loadFont("courier");
 			  textFont(fontA, 14);
-			  
-			  
 			}
 			 
 			
 			//set up of the background
 			void draw(){  
-			  text("Hello Web!",20,20);
-			  background(62,87,40);
-			  //test.drawB();
-			  println("Hello ErrorLog!");
-			  //bob.drawB();
-			  chic.draw();
-			  //chic.move();
-			  if(keyPressed == true){
-				console.log(keyCode);
-				if (keyCode == 39 && chic.canMove() == true){ //it can move right
-					chic.move("right");
-				}
-				else if(keyCode == 39 && chic.canMove() == false && die == true){
-					chic.move("die");
-					die = false;
-				
-				}
-				else if (keyCode == 39 && chic.canMove() == false){//it cant move right
-					chic.move("left");
-					chic.move("left");
-					chic.move("left");
-					
-				} /*
-				else if (keyCode == 39 && chic.hurtMove() == false){//it hits the pain to the right
-					chic.move("die");
-					console.log("heyyy")
-					
-				} */
-				else if(keyCode == 37 && chic.canMove() == true){// it can move left
-					chic.move("left");
-				}
-				else if(keyCode == 37 && chic.canMove() == false && die == true){
-					chic.move("die");
-					die = false;
-				
-				}
-				else if(keyCode ==37 && chic.canMove()== false){// it cant move left
-					chic.move("right");
-					chic.move("right");
-					chic.move("right");				
-				
-				}
-				else if(keyCode == 38 && chic.canMove() == true){ //it can move up
-					chic.move("up");
-				}
-				else if(keyCode == 38 && chic.canMove() == false && die == true){
-					chic.move("die");
-					die = false;
-				
-				}
-				else if (keyCode ==38 && chic.canMove() ==false){ // it cant move up
-					chic.move("down");
-					chic.move("down");
-					chic.move("down");
-					
-				}
-				else if (keyCode == 40 && chic.canMove() == true){ // it can move down
-					chic.move("down");
-				}
-				else if(keyCode == 40 && chic.canMove() == false && die == true){
-					chic.move("die");
-					die = false;
-				
-				}
-				else if (keyCode == 40 && chic.canMove() == false){ // it cant move down
-					chic.move("up");
-					chic.move("up");
-					chic.move("up");
-				
-				}
-			  };
-			  
-			 for (var i=0; i < boxes.length; i++){
-				boxes[i].drawB();
-				//console.log("block here");
-			}/*
-			for (var i=0; i < pain.length; i++){
-				pain[i].drawB();
-				//console.log("block here");
-			}*/
+				background(62,87,40);
+				chic.draw();
+					//inside the drawMaze function is the drawFeathers function and drawGuards function
+				first.drawMaze();
+				checkGuards();
+				arrow(keyPressed, keyCode);
 			}
 			
-			//this is the building class
-			class Chicken{
-				//attributes
-				var x;
-				var y;				
-				var w;
-					//constructor
-					Chicken( xVal, yVal,width)
-					{
-						x=xVal;
-						y=yVal;
+			function arrow(keyPressed, keyCode){
+				if(keyPressed == true){
+					console.log(keyCode);
+					if(keyCode == 39 && chic.canMove() == true){ //it can move right 
+					chic.move("right");
+					checkPosition(f);
+					}
+					else if(keyCode == 39 && chic.canMove() == false && die == true){
+						chic.move("die");
+						die = false;
 					
-						w=width;
-						
 					}
-					//methods
-					void draw()
-					{
-						
-						noStroke();
-						fill(100,100,100); //center
-						rect(x,y,w,w);
-						fill(178, 136, 93);//white
-						rect(x+5,y,w,w);
-						rect(x-5,y,w,w);
-						rect(x,y-5,w,w);
-						rect(x,y+5,w,w);
-						rect(x+5,y+5,w,w);
-						rect(x-5,y+5,w,w);
-						rect(x+5,y-5,w,w);
-						rect(x-5,y-5,w,w);
-						fill(230,138,0);//orange
-						rect(x+5,y+10,w,w);	//feet					
-						rect(x-5,y+10,w,w);//feet
-						fill(178, 136, 93);//white
-						rect(x-10,y,w,w);
-						rect(x+10,y-5,w,w);				
-						rect(x+10,y,w,w);
-						rect(x+10,y-10,w,w);
-						fill(230,138,0);
-						rect(x+15,y-10,w,w);
-						fill(178, 136, 93);//white
-						rect(x+10,y-15,w,w);
-						rect(x+5,y-10,w,w);
-						rect(x+5,y-15,w,w);
-						fill(0,0,0);
-						rect(x+9.5,y-10,2.5,2.5);
-						
+					else if (keyCode == 39 && chic.canMove() == false){ //it can't move right
+						chic.move("left");
+						chic.move("left");
+						chic.move("left");
+						checkPosition(f);
+					} 
+					else if(keyCode == 37 && chic.canMove() == true){// it can move left
+						chic.move("left");
+						checkPosition(f);
 					}
-					void move(dir){
-					if (dir == "right"){
-						x++;
-						//console.log("x is" +x);
+					else if(keyCode == 37 && chic.canMove() == false && die == true){
+						chic.move("die");
+						die = false;
 					}
-					else if(dir == "left") {
-							x--;
-						}
-						//top
-						else if(dir == "up") {
-							y--;
-						}
-					
-						//bottom
-						else if(dir == "down") {
-								y++;
-						}
-						else if( dir == "die"){
-						       console.log("here");
-							   x=100;
-							   y=500;
-						}
+					else if(keyCode ==37 && chic.canMove()== false){// it can't move left
+						chic.move("right");
+						chic.move("right");
+						chic.move("right");		
+						checkPosition(f);
+					}
+					else if(keyCode == 38 && chic.canMove() == true){ //it can move up
+						chic.move("up");
+						checkPosition(f);
+					}
+					else if(keyCode == 38 && chic.canMove() == false && die == true){
+						chic.move("die");
+						die = false;
+					}
+					else if (keyCode ==38 && chic.canMove() ==false){ // it can't move up
+						chic.move("down");
+						chic.move("down");
+						chic.move("down");
+						checkPosition(f);
+					}
+					else if (keyCode == 40 && chic.canMove() == true){ // it can move down
+						chic.move("down");
+						checkPosition(f);
+					}
+					else if(keyCode == 40 && chic.canMove() == false && die == true){
+						chic.move("die");
+						die = false;
+					}
+					else if (keyCode == 40 && chic.canMove() == false){ // it can't move down
+						chic.move("up");
+						chic.move("up");
+						chic.move("up");
+						checkPosition(f);
+					}
 				}
-					void canMove(){
-					var move = true;
-									
-					
-					for (var i=0; i < boxes.length; i++){
-						if (chic.x <boxes[i].R +10&&
-							chic.x>boxes[i].L - 10&&
-							chic.y >boxes[i].T -10 &&
-							chic.y <boxes[i].B +10 ){
-							
-							console.log("move is false");
-							move = false;
-							//return move;
-							if(boxes[i].isPain()){
-								die = true;
-							}
-							}
-						/*else{
-							console.log("move is true");
-							move = true;
-							return move;
-							}*/
-						//return move;
-					
-					}
-					
-					return move;
-					//console.log("something returned");
-					
-					}
-					/*
-					void hurtMove(){
-					var hurt = true;
-					
-					for (var i = 0; i< pain.length; i++){
-						if (chic.x<pain[i].R +10 &&
-							chic.x>pain[i].L -10&&
-							chic.y>pain[i].T -10&&
-							chic.y<pain[i].B +10){
-							
-							console.log("move is false pt two");
-							hurt = false;
-							}
-						
-					}
-					return hurt;
-					}*/
-					
 			}
 			
-				
-				function arrowPress(e){
-					console.log(e.keyCode);
-				}
-			
-			
+//START OF BLOCK CODE
 			class Block{
-			//attributes
-				var R;
-				var T;
-				var B;
-				var L;
+				//attributes
+				var r;
+				var t;
+				var b;
+				var l;
 				var h;
 				var w; 
 				var x;
 				var y;
 				var p;
-					//constructor
-					Block(xVal, yVal, height, width, pain){
-						x=xVal;
-						y=yVal;
-						h = height;
-						w = width;
-						p=pain;
-						
+				//constructor
+				Block(xVal, yVal, height, width,pain){
+					x=xVal;
+					y=yVal;
+					h = height;
+					w = width;
+					p=pain;
+				}
+				//methods
+				void drawB(){
+					t = y;
+					b = y+ h;
+					l = x;
+					r = x+w;					
+					fill(0,0,0);
+					rect(x,y,w,h);
+				}
+				boolean isPain(){
+					if (p==0){
+						return false;
 					}
-					void drawB(){
-						T = y;
-						B = y+ h;
-						L = x;
-						R = x+w;					
-						fill(0,0,0);
-						rect(x,y,w,h);
+					else{
+						return true;
 					}
-					boolean isPain(){
-						if (p==0){
-							return false;
-						}else{
-							return true;
-						}
-					}
+				}
 			}
 			
+//START OF MAZE CODE
+			class Maze{
+				//attributes
+				//list of feathers
+				var feathers=[];
+				
+				//constructor, we don't really need anything in the parameters yet
+				Maze(){
+					//add the feathers here
+					feathers.push(new Feathers(100,100,0), new Feathers(250,250,0), new Feathers(300,300,0), new Feathers(400,400,0));
+				}
+				
+				//methods
+				//draw the maze with feathers and guards and boxes
+				void drawMaze(){
+					for(var i=0; i<feathers.length();i++){
+						feathers[i].drawFeathers();
+					}
+				
+					for(var a=0;a<boxes.length;a++){
+						//console.log("hi");
+						boxes[a].drawB();
+					}
 					
+					bob.moveGuards();					
+				}
+				
+				//If we don't use this function, we wouldn't be able to use the "feathers" list outside of the Maze class. This allows us to return the list feathers. See line 25.
+				Array getFeathers(){
+					return feathers;
+				}
+				
+				Array getBoxes(){
+					return boxes;
+				}
+			}
+//END OF MAZE CODE
+
+//TABATHA'S CHICKEN CODE STARTS HERE
+			class Chicken{
+				//attributes
+				var x;
+				var y;
+				var w;
+				//constructor
+				Chicken(xVal,yVal,width){
+					x=xVal;
+					y=yVal;
+					w=width;
+				}
+				//methods
+				void draw(){
+					noStroke();
+					fill(100,100,100); //center
+					rect(x,y,w,w);
+					fill(178, 136, 93);//white
+					rect(x+5,y,w,w);
+					rect(x-5,y,w,w);
+					rect(x,y-5,w,w);
+					rect(x,y+5,w,w);
+					rect(x+5,y+5,w,w);
+					rect(x-5,y+5,w,w);
+					rect(x+5,y-5,w,w);
+					rect(x-5,y-5,w,w);
+					fill(230,138,0);//orange
+					rect(x+5,y+10,w,w);	//feet					
+					rect(x-5,y+10,w,w);//feet
+					fill(178, 136, 93);//white
+					rect(x-10,y,w,w);
+					rect(x+10,y-5,w,w);				
+					rect(x+10,y,w,w);
+					rect(x+10,y-10,w,w);
+					fill(230,138,0);
+					rect(x+15,y-10,w,w);
+					fill(178, 136, 93);//white
+					rect(x+10,y-15,w,w);
+					rect(x+5,y-10,w,w);
+					rect(x+5,y-15,w,w);
+					fill(0,0,0);
+					rect(x+9.5,y-10,2.5,2.5);	
+				}
+				void move(dir){
+					if (dir == "right"){
+						x++;
+					}
+					else if(dir == "left"){
+						x--;
+					}
+					else if(dir == "up"){
+						y--;
+					}
+					else if(dir == "down"){
+						y++;
+					}
+					else if( dir == "die"){
+					       console.log("here");
+						   x=100;
+						   y=500;
+					}
+				}
+				void canMove(){
+					var move = true;
+					for (var i=0; i < boxes.length; i++){
+						if (chic.x <boxes[i].r +10&&
+							chic.x>boxes[i].l - 10&&
+							chic.y >boxes[i].t -10 &&
+							chic.y <boxes[i].b +10 ){
+								move = false;
+								if(boxes[i].isPain()){
+								die = true;
+								}
+						}
+					}
+					return move;
+				}
+			}
+			
+			function arrowPress(e){
+				console.log(e.keyCode);
+			}
+//END OF CHICKEN CODE
+
+//START OF FEATHERS CODE
+			class Feathers{
+				//attributes
+				var x;
+				var y;
+				var w;
+				
+				//constructor
+				Feathers(xPos,yPos, width){
+					x=xPos;
+					y=yPos;
+					w=width;
+				}
+				
+				//methods
+				void drawFeathers(){
+					fill(242, 233, 233);
+					rect(x+4,y,w-13,13);
+					fill(242, 233, 233);
+					rect(x+1,y-8,w-18,17);
+					fill(242, 233, 233);
+					rect(x-4,y-13,w-17,17);
+					fill(235, 221, 221);
+					rect(x-8,y-18,w-17,16);
+					fill(230, 211, 202);
+					rect(x-12,y-23,w-17,15);
+					fill(214, 197, 145);
+					rect(x-16,y-27,w-17,14);
+					fill(219, 211, 188);
+					rect(x+4,y+13,w+5,6);
+				}
+			}
+//END OF FEATHER CODE
+
+//CHECKING POS AND UPDATING SCORE FUNCTION
+			function checkPosition(feathers){
+				for (var i=0;i<feathers.length;i++){
+					//Basically if the chicken touches the feather
+					if ((chic.x > feathers[i].x-37) && (chic.x < feathers[i].x+9 + feathers[i].w) && (chic.y > feathers[i].y - 47) && (chic.y < feathers[i].y + 19)){
+						updateScore();
+						//move feather off of the screen
+						feathers[i].x=-500;
+						feathers[i].y=-500;
+					}
+				}
+			}
+			
+			function updateScore(){
+				score++;
+				document.getElementById("score").innerHTML = score;
+				console.log(score);
+			}
+//END OF UPDATING SCORE FUNCTION
+
+//HITTING THE GUARD AND RESTARTING POSITION
+			function checkGuards(){
+				if((chic.x>bob.g-35) && (chic.x<bob.g+40) && (chic.y>bob.h-47) && (chic.y<bob.h+5)){
+					//move chicken back to original starting position
+					console.log("WORK");
+					chic.x=100;	
+					chic.y=500;					
+				}
+			}
+//END OF GUARD CHICKEN INTERACTION
+
+//GUARD CODE START
+			class Guards{
+				//attributes
+				var g;
+				var h;
+				
+				//constructor
+				Guards(posx,posy){
+				g=posx;
+				h=posy;
+				}
+				
+				//methods
+				void drawGuardsUp(){
+					dir=1;
+					if(dir==1){
+						//START OF LIGHT
+						fill(255, 243, 13);
+						rect(g,h,5,5);
+						fill(255, 243, 13);
+						rect(g-5,h-5,15,5);
+						fill(255, 243, 13);
+						rect(g-10,h-12,25,7);
+						fill(255, 243, 13);
+						rect(g-15,h-19,35,7);
+						fill(255, 243, 13);
+						rect(g-20,h-26,45,7);
+						fill(255, 243, 13);
+						rect(g-25,h-33,55,7);
+						fill(255, 243, 13);
+						rect(g-30,h-40,65,7);
+						fill(255, 243, 13);
+						rect(g-35,h-47,75,7);
+						//END OF LIGHT
+
+						//START OF BODY
+						fill(0, 0, 0);
+						rect(g-5,h+5,17,20);
+						//END OF BODY
+
+						//START OF PERSON
+						fill(133, 97, 34);
+						rect(g-15,h+35,40,19);
+						fill(133, 97, 34);
+						rect(g-10,h+28,30,29);
+						fill(214, 172, 98);
+						rect(g-5,h+25,14,3);
+						//END OF PERSON
+					}
+				}
+				
+				void drawGuardsDown(){
+					dir=2;
+					if(dir==2){
+						//LIGHT
+						fill(255, 243, 13);
+						rect(g,h,5,5);
+						fill(255, 243, 13);
+						rect(g-5,h+5,15,5);
+						fill(255, 243, 13);
+						rect(g-10,h+10,25,7);
+						fill(255, 243, 13);
+						rect(g-15,h+17,35,7);
+						fill(255, 243, 13);
+						rect(g-20,h+24,45,7);
+						fill(255, 243, 13);
+						rect(g-25,h+31,55,7);
+						fill(255, 243, 13);
+						rect(g-30,h+38,65,7);
+						fill(255, 243, 13);
+						rect(g-35,h+45,75,7);
+						//FLASHLIGHT BODY
+						fill(0, 0, 0);
+						rect(g-5,h-20,17,20);
+						//PERSON
+						fill(133, 97, 34);
+						rect(g-15,h-49,40,19);
+						fill(133, 97, 34);
+						rect(g-10,h-52,30,29);
+						fill(214, 172, 98);
+						rect(g-5,h-23,14,3);
+					}
+				}
+				
+				void drawGuardsRight(){
+					dir=3;
+					if(dir==3){
+						//LIGHT
+						fill(255, 243, 13);
+						rect(g,h,5,5);
+						fill(255, 243, 13);
+						rect(g+5,h-5,5,15);
+						fill(255, 243, 13);
+						rect(g+10,h-10,7,25);
+						fill(255, 243, 13);
+						rect(g+17,h-15,7,35);
+						fill(255, 243, 13);
+						rect(g+24,h-20,7,45);
+						fill(255, 243, 13);
+						rect(g+29,h-25,7,55);
+						fill(255, 243, 13);
+						rect(g+36,h-30,7,65);
+						fill(255, 243, 13);
+						rect(g+43,h-35,7,75);
+						//FLASHLIGHT BODY
+						fill(0, 0, 0);
+						rect(g-20,h-6,20,17);
+						//PERSON
+						fill(133, 97, 34);
+						rect(g-49,h-20,19,40);
+						fill(133, 97, 34);
+						rect(g-53,h-15,29,30);
+						fill(214, 172, 98);
+						rect(g-24,h-6,4,14);
+					}
+				}
+				
+				void drawGuardsLeft(){
+					dir=4;
+					if(dir==4){
+						//LIGHTS
+						fill(255, 243, 13);
+						rect(g,h,5,5);
+						fill(255, 243, 13);
+						rect(g-5,h-5,5,15);
+						fill(255, 243, 13);
+						rect(g-12,h-10,7,25);
+						fill(255, 243, 13);
+						rect(g-19,h-15,7,35);
+						fill(255, 243, 13);
+						rect(g-26,h-20,7,45);
+						fill(255, 243, 13);
+						rect(g-33,h-25,7,55);
+						fill(255, 243, 13);
+						rect(g-40,h-30,7,65);
+						fill(255, 243, 13);
+						rect(g-47,h-35,7,75);
+						//FLASHLIGHT BODY
+						fill(0, 0, 0);
+						rect(g+5,h-6,20,17);
+						//PERSON
+						fill(133, 97, 34);
+						rect(g+35,h-16,19,40);
+						fill(133, 97, 34);
+						rect(g+29,h-11,29,30);
+						fill(214, 172, 98);
+						rect(g+25,h-6,4,14);
+					}
+				}
+				
+				void canMoveGuards(){
+					moveThem = true;
+					for (var i=0; i < boxes.length; i++){
+						if (bob.g <boxes[i].r +10&&
+							bob.g>boxes[i].l - 10&&
+							bob.h >boxes[i].t -10 &&
+							bob.h <boxes[i].b +10 ){
+								console.log("move is false");
+								moveThem = false;
+						}
+					}
+					return moveThem;
+				}
+				
+				void moveGuards(){
+					canMoveGuards();
+					console.log("HERE");
+					if ((dir == 1) && (moveThem == true)){ //if facing up and can move 
+						h=h-2;
+						drawGuardsUp();
+					}
+					else if ((dir == 1) && (moveThem == false)){ 
+						h=h+30;
+						drawGuardsDown();
+					} 
+					else if((dir == 2) && (moveThem == true)){
+						h=h+2;
+						drawGuardsDown();
+					}
+					else if((dir == 2) && (moveThem == false)){
+						h=h-30;
+						drawGuardsUp();
+					}
+					else if((dir == 3) && (moveThem == true)){
+						g=g+2;
+						drawGuardsRight();
+					}
+					else if((dir == 3) && (moveThem == false)){
+						g=g-30;
+						drawGuardsLeft();					
+					}
+					else if((dir == 4) && (moveThem == true)){
+						g=g-2;
+						drawGuardsLeft();
+					}
+					else if((dir == 4) && (moveThem == false)){
+						g=g+30;
+						drawGuardsRight();
+					}
+					else if(dir==null){
+						drawGuardsDown();
+						console.log("NULLLL");
+					}
+				}
+			}
+//END OF GUARD CODE				
 		</script>
 		
 		<body >
+		<div>Feather Count</div>
+		<div id="score">0</div>
 		<canvas id="mycanvas"></canvas>
 	</body>
 </html>

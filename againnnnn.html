@@ -8,15 +8,24 @@
 			
 			Chicken chic = new Chicken(60,500,5);
 			Guards bob=new Guards(650,200);
-			
 			var dir= null;
 			var moveThem;
 			var boxes =[];
+			
+			var score =0;
 			var feathers=[];
+			if ( score == 1){
+				throw new Error("YOU GOT ALL YOUR FEATHERS BACK!! GO FREE RANGE!!");
+			}
 			
-			feathers.push(new Feathers(100,100,0), new Feathers(250,250,0), new Feathers(300,300,0), new Feathers(400,400,0));
 			
-			
+			feathers.push(
+			new Feathers(100,100,0), 
+			new Feathers(790,100,0), 
+			new Feathers(480,520,0), 
+			new Feathers(440,430,0),
+			new Feathers (840,530,0)
+			);
 			//walls
 			Block wall = new Block(0,0,600,40,0);
 			Block wall2 = new Block(0,0,40,900,0);
@@ -34,7 +43,11 @@
 			Block k = new Block (380,30,80,130,0);
 			Block l = new Block (410,100,30,80,0);
 			Block m = new Block (350,60,30,20,0);
-			Blocl n = new Block (520,50,20,30,0);
+			Block n = new Block (520,50,20,30,0);
+			Block ja = new Block (630,500,20,30,0);
+			Block ma = new Block ( 700,300,80,110,0);
+			Block mah = new Block ( 770,280,40,60,0);
+			
 			
 			
 			
@@ -56,6 +69,9 @@
 			boxes.push(l);
 			boxes.push(n);
 			boxes.push(m);
+			boxes.push(ja);
+			boxes.push(ma);
+			boxes.push(mah);
 			
 			//things
 			Block pe = new Block( 500,470,70,30,1);
@@ -75,6 +91,11 @@
 			Block ka = new Block (250,500,8,8,1);
 			Block fa = new Block (230,200,8,8,1);
 			Block ba = new Block (250,150,8,8,1);
+			Block ga = new Block (400,455,20,35,1);
+			Block pa = new Block (750,440,30,90,1);
+			Block nah = new Block (730, 510,40,30,1);
+			Block da = new Block (790, 480, 50,10,1);
+			Block ca = new Block (700,450,30,20,1);
 			
 			
 			boxes.push(pe);
@@ -94,6 +115,11 @@
 			boxes.push(ka);
 			boxes.push(fa);
 			boxes.push(ba);
+			boxes.push(ga);
+			boxes.push(pa);
+			boxes.push(nah);
+			boxes.push(da);
+			boxes.push(ca);
 								
 			void setup()
 			{
@@ -112,29 +138,28 @@
 			void draw(){  
 			  
 			  background(62,87,40);
-			  //test.drawB();
+			  
 			  println("Hello ErrorLog!");
+			  
 			 for (var i=0; i < boxes.length; i++){
 				boxes[i].drawB();
-				//console.log("block here");
+				
 			}
-			for(var i=0; i<feathers.length();i++){
+			 for(var i=0; i<feathers.length();i++){
 						feathers[i].drawFeathers();
 					}
-			Array getFeathers(){
-					return feathers;
-				}
+	
 		
-			  //bob.drawB();
+			  
 			  chic.draw();
 			  bob.moveGuards();	
 			  checkGuards();
-			  //chic.move();
+			  
 			  if(keyPressed == true){
 				console.log(keyCode);
 				if (keyCode == 39 && chic.canMove() == true){ //it can move right
 					chic.move("right");
-					checkPosition(f);
+					checkPosition();
 				}
 				else if(keyCode == 39 && chic.canMove() == false && die == true){
 					chic.move("die");
@@ -145,17 +170,12 @@
 					chic.move("left");
 					chic.move("left");
 					chic.move("left");
-					checkPosition(f);
+					checkPosition();
 					
-				} /*
-				else if (keyCode == 39 && chic.hurtMove() == false){//it hits the pain to the right
-					chic.move("die");
-					console.log("heyyy")
-					
-				} */
+				} 
 				else if(keyCode == 37 && chic.canMove() == true){// it can move left
 					chic.move("left");
-					checkPosition(f);
+					checkPosition();
 				}
 				else if(keyCode == 37 && chic.canMove() == false && die == true){
 					chic.move("die");
@@ -166,12 +186,12 @@
 					chic.move("right");
 					chic.move("right");
 					chic.move("right");	
-					checkPosition(f);
+					checkPosition();
 				
 				}
 				else if(keyCode == 38 && chic.canMove() == true){ //it can move up
 					chic.move("up");
-					checkPosition(f);
+					checkPosition();
 				}
 				else if(keyCode == 38 && chic.canMove() == false && die == true){
 					chic.move("die");
@@ -182,12 +202,12 @@
 					chic.move("down");
 					chic.move("down");
 					chic.move("down");
-					checkPosition(f);
+					checkPosition();
 					
 				}
 				else if (keyCode == 40 && chic.canMove() == true){ // it can move down
 					chic.move("down");
-					checkPosition(f);
+					checkPosition();
 				}
 				else if(keyCode == 40 && chic.canMove() == false && die == true){
 					chic.move("die");
@@ -198,7 +218,7 @@
 					chic.move("up");
 					chic.move("up");
 					chic.move("up");
-					checkPosition(f);
+					checkPosition();
 				
 				}
 			  };
@@ -259,7 +279,7 @@
 					void move(dirr){
 					if (dirr == "right"){
 						x++;
-						//console.log("x is" +x);
+						
 					}
 					else if(dirr == "left") {
 							x--;
@@ -277,6 +297,7 @@
 						       console.log("here");
 							   x=100;
 							   y=500;
+							   
 						}
 				}
 					void canMove(){
@@ -296,36 +317,15 @@
 								die = true;
 							}
 							}
-						/*else{
-							console.log("move is true");
-							move = true;
-							return move;
-							}*/
-						//return move;
+						
 					
 					}
 					
 					return move;
-					//console.log("something returned");
+					
 					
 					}
-					/*
-					void hurtMove(){
-					var hurt = true;
-					
-					for (var i = 0; i< pain.length; i++){
-						if (chic.x<pain[i].R +10 &&
-							chic.x>pain[i].L -10&&
-							chic.y>pain[i].T -10&&
-							chic.y<pain[i].B +10){
-							
-							console.log("move is false pt two");
-							hurt = false;
-							}
-						
-					}
-					return hurt;
-					}*/
+				
 					
 			}
 			
@@ -624,7 +624,7 @@
 
 
 //CHECKING POS AND UPDATING SCORE FUNCTION
-			function checkPosition(feathers){
+			function checkPosition(){
 				for (var i=0;i<feathers.length;i++){
 					//Basically if the chicken touches the feather
 					if ((chic.x > feathers[i].x-37) && (chic.x < feathers[i].x+9 + feathers[i].w) && (chic.y > feathers[i].y - 47) && (chic.y < feathers[i].y + 19)){
