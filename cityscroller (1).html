@@ -504,7 +504,11 @@
 					canMoveGuards();
 					console.log("HERE");
 					if ((dir == 1) && (moveThem == true)){ //if facing up and can move 
+
 						h=h-2;
+
+						h=h-1;
+
 						drawGuardsUp();
 					}
 					else if ((dir == 1) && (moveThem == false)){ 
@@ -512,7 +516,11 @@
 						drawGuardsDown();
 					} 
 					else if((dir == 2) && (moveThem == true)){
+
 						h=h+2;
+
+						h=h+1;
+
 						drawGuardsDown();
 					}
 					else if((dir == 2) && (moveThem == false)){
@@ -520,7 +528,11 @@
 						drawGuardsUp();
 					}
 					else if((dir == 3) && (moveThem == true)){
+
 						g=g+2;
+
+						g=g+1;
+
 						drawGuardsRight();
 					}
 					else if((dir == 3) && (moveThem == false)){
@@ -528,7 +540,11 @@
 						drawGuardsLeft();					
 					}
 					else if((dir == 4) && (moveThem == true)){
+
 						g=g-2;
+
+						g=g-1;
+
 						drawGuardsLeft();
 					}
 					else if((dir == 4) && (moveThem == false)){

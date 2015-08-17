@@ -7,6 +7,7 @@
 	<script type="text/processing" data-processing-target="mycanvas">
 			
 			Chicken chic = new Chicken(60,500,5);
+			Chicken chic2 = new Chicken(450,300,20);
 			Guards bob=new Guards(650,200);
 			var dir= null;
 			var moveThem;
@@ -14,9 +15,7 @@
 			
 			var score =0;
 			var feathers=[];
-			if ( score == 1){
-				throw new Error("YOU GOT ALL YOUR FEATHERS BACK!! GO FREE RANGE!!");
-			}
+			
 			
 			
 			feathers.push(
@@ -148,7 +147,7 @@
 			 for(var i=0; i<feathers.length();i++){
 						feathers[i].drawFeathers();
 					}
-	
+			
 		
 			  
 			  chic.draw();
@@ -223,7 +222,12 @@
 				}
 			  };
 			  
-			 
+			 if ( score == 1){
+				background(62,87,40);
+				
+				console.log("win");
+				
+			}
 	
 			}
 			
